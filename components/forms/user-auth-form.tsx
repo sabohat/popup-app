@@ -21,7 +21,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
 
 type FormData = z.infer<typeof userAuthSchema>
 
-export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
+export function UserAuthForm ({ className, type, ...props }: UserAuthFormProps) {
   const {
     register,
     handleSubmit,
@@ -33,7 +33,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
   const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
 
-  async function onSubmit(data: FormData) {
+  async function onSubmit (data: FormData) {
     setIsLoading(true)
 
     const signInResult = await signIn("email", {
@@ -108,7 +108,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
         className={cn(buttonVariants({ variant: "outline" }))}
         onClick={() => {
           setIsGoogleLoading(true)
-          signIn("google")
+          signIn("google", { callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard` })
         }}
         disabled={isLoading || isGoogleLoading}
       >
